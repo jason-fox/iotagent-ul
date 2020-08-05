@@ -30,8 +30,8 @@ const config = require('./config-test.js');
 const nock = require('nock');
 const iotAgentLib = require('iotagent-node-lib');
 const should = require('should');
-const request = require('request');
 const utils = require('../../utils');
+const request = utils.request;
 let mockedClientServer;
 let contextBrokerMock;
 

@@ -29,6 +29,7 @@ const nock = require('nock');
 const iotAgentLib = require('iotagent-node-lib');
 const should = require('should');
 const utils = require('../utils');
+const request = utils.request;
 let mockedClientServer;
 let contextBrokerMock;
 
@@ -69,7 +70,7 @@ describe('HTTP Transport binding: commands', function() {
             .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus2Success.json'));
 
         iotagentUl.start(config, function(error) {
-            utils.request(provisionOptions, function(error, response, body) {
+            request(provisionOptions, function(error, response, body) {
                 done();
             });
         });
@@ -95,7 +96,7 @@ describe('HTTP Transport binding: commands', function() {
         };
 
         it('should return a 200 OK without errors', function(done) {
-            utils.request(commandOptions, function(error, response, body) {
+            request(commandOptions, function(error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
@@ -103,21 +104,21 @@ describe('HTTP Transport binding: commands', function() {
         });
 
         it('should reply with the appropriate command information', function(done) {
-            utils.request(commandOptions, function(error, response, body) {
+            request(commandOptions, function(error, response, body) {
                 should.exist(body);
                 done();
             });
         });
 
         it('should update the status in the Context Broker', function(done) {
-            utils.request(commandOptions, function(error, response, body) {
+            request(commandOptions, function(error, response, body) {
                 contextBrokerMock.done();
                 done();
             });
         });
 
         it('should send the information to the configured device endpoint', function(done) {
-            utils.request(commandOptions, function(error, response, body) {
+            request(commandOptions, function(error, response, body) {
                 mockedClientServer.done();
                 done();
             });
@@ -156,7 +157,7 @@ describe('HTTP Transport binding: commands', function() {
         });
 
         it('should update the status in the Context Broker', function(done) {
-            utils.request(commandOptions, function(error, response, body) {
+            request(commandOptions, function(error, response, body) {
                 setTimeout(function() {
                     contextBrokerMock.done();
                     done();
@@ -214,7 +215,7 @@ describe('HTTP Transport binding: commands', function() {
                 })
                 .reply(200, utils.readExampleFile('./test/contextResponses/updateStatus2Success.json'));
 
-            utils.request(provisionWrongEndpoint, function(error, response, body) {
+            request(provisionWrongEndpoint, function(error, response, body) {
                 setTimeout(function() {
                     done();
                 }, 50);
@@ -222,7 +223,7 @@ describe('HTTP Transport binding: commands', function() {
         });
 
         it('should return a 200 OK without errors', function(done) {
-            utils.request(commandOptions, function(error, response, body) {
+            request(commandOptions, function(error, response, body) {
                 should.not.exist(error);
                 response.statusCode.should.equal(200);
                 done();
@@ -230,7 +231,7 @@ describe('HTTP Transport binding: commands', function() {
         });
 
         it('should update the status in the Context Broker', function(done) {
-            utils.request(commandOptions, function(error, response, body) {
+            request(commandOptions, function(error, response, body) {
                 setTimeout(function() {
                     contextBrokerMock.done();
                     done();
