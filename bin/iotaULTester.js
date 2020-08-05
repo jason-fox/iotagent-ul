@@ -31,7 +31,7 @@ const defaultConfig = require('../client-config.js');
 const commandLine = require('iotagent-node-lib').commandLine;
 const clUtils = commandLine.clUtils;
 const mqtt = require('mqtt');
-const request = require('request');
+const got = require('got');
 const async = require('async');
 const _ = require('underscore');
 let mqttClient;
@@ -108,7 +108,7 @@ function checkConnection(fn) {
     };
 }
 
-function singleMeasure(commands) {
+async function singleMeasure(commands) {
     if (config.binding === 'MQTT') {
         const topic = '/' + config.apikey + '/' + config.deviceId + '/attrs/' + commands[0];
 
@@ -123,8 +123,12 @@ function singleMeasure(commands) {
                 d: commands[0] + '|' + commands[1]
             }
         };
-
-        request(httpRequest, httpPublishHandler);
+        try {
+            const response = await got(httpRequest);
+            httpPublishHandler(null, response, response.body);
+        } catch (error) {
+            httpPublishHandler(error);
+        }
     }
 }
 
@@ -159,7 +163,7 @@ function parseMultipleAttributes(attributeString) {
     return result;
 }
 
-function multipleMeasure(commands) {
+async function multipleMeasure(commands) {
     const values = parseMultipleAttributes(commands[0]);
     const topic = '/' + config.apikey + '/' + config.deviceId + '/attrs';
 
@@ -176,7 +180,12 @@ function multipleMeasure(commands) {
             }
         };
 
-        request(httpRequest, httpPublishHandler);
+        try {
+            const response = await got(httpRequest);
+            httpPublishHandler(null, response, response.body);
+        } catch (error) {
+            httpPublishHandler(error);
+        }
     }
 }
 

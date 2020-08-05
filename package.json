@@ -33,16 +33,16 @@
     "watch": "watch 'npm test && npm run lint' ./lib ./test"
   },
   "dependencies": {
-    "amqplib": "~0.5.1",
-    "async": "2.6.1",
-    "body-parser": "1.18.3",
+    "amqplib": "~0.6.0",
+    "async": "~3.2.0",
+    "body-parser": "~1.19.0",
     "dateformat": "3.0.3",
-    "express": "~4.16.4",
+    "express": "~4.17.1",
+    "got": "^11.5.1",
     "iotagent-node-lib": "git://github.com/telefonicaid/iotagent-node-lib.git#master",
-    "logops": "2.1.0",
-    "mqtt": "3.0.0",
-    "request": "2.88.0",
-    "underscore": "1.9.1"
+    "logops": "~2.1.0",
+    "mqtt": "~4.1.0",
+    "underscore": "~1.10.2"
   },
   "devDependencies": {
     "coveralls": "~3.0.2",

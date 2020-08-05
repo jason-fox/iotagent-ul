@@ -7,9 +7,9 @@ addons:
     packages:
       - rabbitmq-server
 
-branches:
-  only:
-    - master
+#branches:
+#  only:
+#    - master
 
 services:
   - rabbitmq
