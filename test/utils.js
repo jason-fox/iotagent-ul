@@ -24,6 +24,7 @@
 /* eslint-disable no-unused-vars */
 
 const fs = require('fs');
+const got = require('got');
 
 function readExampleFile(name, raw) {
     let text = null;
@@ -57,6 +58,18 @@ function parseConfigurationResponse(payload) {
     });
 
     return _result;
+}
+
+function request(options, handler) {
+    (async () => {
+        try {
+            await got(options).then((response) => {
+                handler(null, response, response.body);
+            });
+        } catch (error) {
+            handler(error);
+        }
+    })();
 }
 
 exports.readExampleFile = readExampleFile;
