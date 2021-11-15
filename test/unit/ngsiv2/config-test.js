@@ -42,6 +42,11 @@ config.amqp = {
     options: { durable: true }
 };
 
+config.tangle = {
+    url: 'https://api.thin-hornet-1.h.chrysalis-devnet.iota.cafe',
+    messagePath: 'fiware'
+};
+
 config.iota = {
     logLevel: 'FATAL',
     autocast: true,
